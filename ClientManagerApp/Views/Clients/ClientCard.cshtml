@@ -1,0 +1,18 @@
+﻿@model ClientManagerApp.Models.Client
+
+@{
+    ViewData["Title"] = "Карточка клиента";
+}
+
+<link rel="stylesheet" href="~/css/clientCardStyle.css">
+
+<div class="client-card">
+    <h1 class="card-title">Карточка клиента: @Model.FirstName @Model.LastName</h1>
+    <div class="card-details">
+        <p><strong>Имя:</strong> @Model.FirstName</p>
+        <p><strong>Фамилия:</strong> @Model.LastName</p>
+        <p><strong>Email:</strong> @Model.Email</p>
+        <p><strong>Телефон:</strong> @Model.Phone</p>
+    </div>
+    <a href="@Url.Action("Index", "Clients")" class="btn btn-primary">Вернуться к списку клиентов</a>
+</div>

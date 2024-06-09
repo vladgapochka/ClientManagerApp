@@ -1,0 +1,127 @@
+﻿@model IEnumerable<ClientManagerApp.Models.Client>
+
+@{
+    ViewData["Title"] = "Список клиентов";
+}
+<link rel="stylesheet" href="~/css/style.css">
+
+<div class="content-wrapper">
+    <h1>@ViewData["Title"]</h1>
+    <div class="controls">
+        <button class="btn btn-custom-blue" onclick="showCreateModal()">Добавить клиента</button>
+        <form action="/Clients/Search" method="get" class="search-form">
+            <input class="form-control" type="search" placeholder="Поиск" aria-label="Search" name="searchString">
+            <button class="btn btn-custom-blue" type="submit">Поиск</button>
+        </form>
+    </div>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Email</th>
+                <th>Телефон</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var client in Model)
+            {
+                <tr>
+                    <td>@client.FirstName</td>
+                    <td>@client.LastName</td>
+                    <td>@client.Email</td>
+                    <td>@client.Phone</td>
+                    <td>
+                        <button class="btn btn-custom-blue" onclick="editClient('@client.Id')">Редактировать</button>
+                        <a class="btn btn-danger delete-client-btn" data-id="@client.Id">Удалить</a>
+                        <a class="btn btn-secondary" href="@Url.Action("ClientCard", "Clients", new { id = client.Id })">Карточка</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<!-- Модальное окно для добавления нового клиента -->
+<div class="modal fade" id="createClientModal" tabindex="-1" role="dialog" aria-labelledby="createClientModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createClientModalLabel">Добавить нового клиента</h5>
+                
+            </div>
+            <div class="modal-body">
+                <form id="createClientForm">
+                    <div class="form-group">
+                        <label>Имя</label>
+                        <input type="text" class="form-control" name="FirstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Фамилия</label>
+                        <input type="text" class="form-control" name="LastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="Email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Телефон</label>
+                        <input type="text" class="form-control" name="Phone" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn btn-primary" onclick="submitCreateForm()">Создать клиента</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Модальное окно для редактирования клиента -->
+<div class="modal fade" id="editClientModal" tabindex="-1" role="dialog" aria-labelledby="editClientModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editClientModalLabel">Редактировать клиента</h5>
+                
+            </div>
+            <div class="modal-body">
+                <form id="editClientForm">
+                    <input type="hidden" name="Id" id="editId">
+                    <div class="form-group">
+                        <label>Имя</label>
+                        <input type="text" class="form-control" name="FirstName" id="editFirstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Фамилия</label>
+                        <input type="text" class="form-control" name="LastName" id="editLastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="Email" id="editEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Телефон</label>
+                        <input type="text" class="form-control" name="Phone" id="editPhone" required>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn btn-primary" onclick="submitEditForm()">Сохранить изменения</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+}

@@ -1,0 +1,38 @@
+﻿.client-card {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.card-title {
+    color: #0B3C93;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.card-details p {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 10px;
+}
+
+.btn-primary {
+    display: block;
+    width: max-content;
+    margin: 20px auto;
+    background-color: #0B3C93;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: white;
+    text-decoration: none;
+    text-align: center;
+}
+
+    .btn-primary:hover {
+        background-color: #092e6e;
+    }
