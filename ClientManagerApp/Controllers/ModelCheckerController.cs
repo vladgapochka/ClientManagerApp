@@ -56,14 +56,20 @@ namespace ClientManagerApp.Controllers
             // Проверяем свойства CTL
             var results = new List<string>
             {
+                // EF-свойства
                 $"Property EF(MainTable): {_modelCheckerService.CheckEF(login, mainTable)}",
                 $"Property EF(AddClient): {_modelCheckerService.CheckEF(mainTable, addClient)}",
                 $"Property EF(EditClient): {_modelCheckerService.CheckEF(mainTable, editClient)}",
                 $"Property EF(ClientCard): {_modelCheckerService.CheckEF(mainTable, clientCard)}",
-                $"Property AG(MainTable -> EF(AddClient)): {_modelCheckerService.CheckAG(mainTable, state => state.Name == "AddClient")}",
-$"Property AG(MainTable -> EF(EditClient)): {_modelCheckerService.CheckAG(mainTable, state => state.Name == "EditClient")}",
-$"Property AG(ClientCard -> MainTable): {_modelCheckerService.CheckAG(clientCard, state => state.Name == "MainTable")}"
 
+                // AG-свойства
+                $"Property AG(MainTable -> EF(AddClient)): {_modelCheckerService.CheckAG(mainTable, state => _modelCheckerService.CheckEF(state, addClient))}",
+                $"Property AG(MainTable -> EF(EditClient)): {_modelCheckerService.CheckAG(mainTable, state => _modelCheckerService.CheckEF(state, editClient))}",
+                $"Property AG(ClientCard -> MainTable): {_modelCheckerService.CheckAG(clientCard, state => _modelCheckerService.CheckEF(state, mainTable))}",
+
+                // AX-свойства
+                $"Property AX(MainTable -> AddClient or EditClient): {_modelCheckerService.CheckAX(mainTable, state => _modelCheckerService.CheckEF(state, addClient))}",
+                $"Property AX(ClientCard -> MainTable): {_modelCheckerService.CheckAX(clientCard, state => _modelCheckerService.CheckEF(state, addClient))}"
             };
 
             // Передаем результаты в представление

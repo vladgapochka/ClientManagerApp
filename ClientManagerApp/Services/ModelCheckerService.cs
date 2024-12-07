@@ -52,23 +52,26 @@ namespace ClientManagerApp.Services
 
 
 
-        // Проверка AX: Свойство выполняется во всех следующих состояниях
         public bool CheckAX(State initialState, Func<State, bool> predicate)
         {
-            // Проверяем, что все состояния, достижимые из текущего состояния через переходы, удовлетворяют предикату
+            // Проверяем все состояния, достижимые через один переход
             if (initialState.Transitions != null)
             {
                 foreach (var transition in initialState.Transitions)
                 {
                     // Если хотя бы одно состояние не удовлетворяет предикату, возвращаем false
                     if (!predicate(transition.To))
+                    {
+                        Console.WriteLine($"AX failed for state: {transition.To.Name}");
                         return false;
+                    }
                 }
             }
 
-            // Если все переходы соответствуют предикату, возвращаем true
+            // Если все состояния удовлетворяют предикату, возвращаем true
             return true;
         }
+
 
         public bool CheckAG(State initialState, Func<State, bool> predicate)
         {
@@ -98,15 +101,16 @@ namespace ClientManagerApp.Services
                     {
                         foreach (var transition in currentState.Transitions)
                         {
-                            Console.WriteLine($"Transition from {transition.From.Name} to {transition.To.Name} via {transition.Action}");
+                            // Переход на следующее состояние
                             stack.Push(transition.To);
                         }
                     }
                 }
             }
 
-            return true;
+            return true; // Если все состояния удовлетворяют предикату
         }
+
 
 
 
