@@ -9,6 +9,8 @@
     <h1>@ViewData["Title"]</h1>
     <div class="controls">
         <button class="btn btn-custom-blue" onclick="showCreateModal()">Добавить клиента</button>
+        <a href="@Url.Action("Index", "ModelChecker")" class="btn btn-custom-blue">Проверить модель</a>
+
         <form action="/Clients/Search" method="get" class="search-form">
             <input class="form-control" type="search" placeholder="Поиск" aria-label="Search" name="searchString">
             <button class="btn btn-custom-blue" type="submit">Поиск</button>

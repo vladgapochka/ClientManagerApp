@@ -1,0 +1,16 @@
+﻿@model List<string>
+
+@{
+    ViewData["Title"] = "Model Checking Results";
+}
+
+<h1>Результаты проверки модели</h1>
+
+<p>Проверка операций добавления, удаления и редактирования клиента:</p>
+
+<ul>
+    @foreach (var result in Model)
+    {
+        <li>@result</li>
+    }
+</ul>
